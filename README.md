@@ -1,6 +1,6 @@
 # USecurity
 
-**USecurity** 是一个用于 **Unity** 项目的安全组件，提供运行时常用数据类型加密，**PlayerPrefs** 存储加密，以及常见加密算法的加密解密快调用接口。
+**USecurity** is a security component used in the **Unity** project. It provides encryption of commonly used data types at runtime, **PlayerPrefs** storage encryption, and a quick call interface for encryption and decryption of common encryption algorithms.
 
 ![topLanguage](https://img.shields.io/github/languages/top/ls9512/USecurity)
 ![size](https://img.shields.io/github/languages/code-size/ls9512/USecurity)
@@ -9,22 +9,24 @@
 ![last](https://img.shields.io/github/last-commit/ls9512/USecurity)
 [![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
 
+[[中文文档]](README_CN.md)
+
 <!-- vscode-markdown-toc -->
-* 1. [接入](#)
+* 1. [Quick Start](#QuickStart)
 * 2. [Anti Cheat](#AntiCheat)
-	* 2.1. [Anti Cheat Value 运行时数据加密](#AntiCheatValue)
-		* 2.1.1. [简介](#-1)
+	* 2.1. [Anti Cheat Value - Runtime Data Encryption](#AntiCheatValue-RuntimeDataEncryption)
+		* 2.1.1. [Introduction](#Introduction)
 		* 2.1.2. [C# Type](#CType)
 		* 2.1.3. [Unity Type](#UnityType)
-		* 2.1.4. [工作机制](#-1)
-		* 2.1.5. [使用示例](#-1)
-		* 2.1.6. [注意事项](#-1)
+		* 2.1.4. [Working Principle](#WorkingPrinciple)
+		* 2.1.5. [How To Use](#HowToUse)
+		* 2.1.6. [Attention](#Attention)
 	* 2.2. [PlayerPrefsAES](#PlayerPrefsAES)
-		* 2.2.1. [简介](#-1)
-		* 2.2.2. [使用示例](#-1)
-* 3. [DFA 敏感词过滤](#DFA)
-	* 3.1. [简介](#-1)
-	* 3.2. [使用示例](#-1)
+		* 2.2.1. [Introduction](#Introduction-1)
+		* 2.2.2. [How To Use](#HowToUse-1)
+* 3. [DFA - Sensitive Word Filtering](#DFA-SensitiveWordFiltering)
+	* 3.1. [Introduction](#Introduction-1)
+	* 3.2. [How To Use](#HowToUse-1)
 * 4. [Encrypt / Decrypt](#EncryptDecrypt)
 	* 4.1. [AES](#AES)
 	* 4.2. [DES](#DES)
@@ -39,17 +41,17 @@
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
 
-##  1. <a name=''></a>接入
-1. 将整个文件夹复制到 `UnityProject/Assets/Plugins/` 目录下
-2. 将 `EncDec/` 目录下，需要用到的每种加密类型的 `Resources/` 子目录下的 Key 文件，设置自己想要的加密密钥，或者点击组件菜单中的 `Create Key` 生成随机密钥。
-3. 如果项目不使用 `Resources.Load` 方式加载资源，可以自行调整密钥配置文件的存储路径，并替换 `USecurityInterface.Load` 的接口实现，也可以对密钥资源文件做二次加密。
+##  1. <a name='QuickStart'></a>Quick Start
+1. Copy the folder to the `UnityProject/Assets/Plugins/` directory.
+2. Set the key file in the `Resources/` subdirectory of each type of encryption needed under the `EncDec/` directory, and set the encryption key you want, or click `Create Key` in the component menu to generate a random key.
+3. If the project does not use the `Resources.Load` method to load resources, you can adjust the storage path of the key configuration file by yourself and replace the interface implementation of `USecurityInterface.Load`, or you can do secondary encryption on the key resource file.
 
 ##  2. <a name='AntiCheat'></a>Anti Cheat
 
-###  2.1. <a name='AntiCheatValue'></a>Anti Cheat Value 运行时数据加密
+###  2.1. <a name='AntiCheatValue-RuntimeDataEncryption'></a>Anti Cheat Value - Runtime Data Encryption
 
-####  2.1.1. <a name='-1'></a>简介
-**AntiCheatValue** 是 **USecurity** 组件的核心功能，提供大量鱼C#和Unity原生数据类型对应的运行时加密数据类型，在大多数情况下，这些数据类型可以直接替换项目中原有的原生类型，并保持与原生类型相同的风格和方法进行使用，可以高效接入使得现有项目快速获得反作弊能力。
+####  2.1.1. <a name='Introduction'></a>Introduction
+**AntiCheatValue** is the core function of the **USecurity** component. It provides runtime encrypted data types corresponding to the native data types of C# and Unity. In most cases, these data types can directly replace the original native data in the project. Type, and use the same style and method as the original type, which can be efficiently accessed so that existing projects can quickly obtain runtime anti-cheating capabilities.
 
 ####  2.1.2. <a name='CType'></a>C# Type
 |Anti Cheat Type|Source Tyoe|
@@ -64,7 +66,7 @@
 |cShort|short|
 |cString|string|
 
-提供大多数常用C#数据类型，并且全部实现原生类型所包含的`IComparable`, `IFormattable`, `IConvertible`, `IEquatable`, `IFormattable`, `IEnumerable`, `ICloneable` 等接口，并且实现 `ISerializable` 接口以支持序列化存储。所有类型都实现了与对应原生类型的 **隐式转换** 和常用 **运算符重载** 。
+Provides most commonly used C# data types, and all implement the interfaces of `IComparable`, `IFormattable`, `IConvertible`, `IEquatable`, `IFormattable`, `IEnumerable`, `ICloneable`, etc. contained in the native type, and implement `ISerializable` `Interface to support serialized storage. All types implement **implicit conversion** and common **operator overloading** with corresponding primitive types.
 
 ####  2.1.3. <a name='UnityType'></a>Unity Type
 |Anti Cheat Type|Source Tyoe|
@@ -75,91 +77,91 @@
 |cVector3|Vector3|
 |cVector4|Vector4|
 
-Unity加密数据类型是基于C#加密类型的二次封装，例如 **cVector3** 本质上是封装了3个 **cFloat** ，因此可以结合实际需求，扩展出其他复杂加密数据类型。
+The Unity encrypted data type is a secondary encapsulation based on the C# encryption type. For example, **cVector3** essentially encapsulates 3 **cFloat**, so it can be combined with actual needs to expand other complex encrypted data types.
 
-####  2.1.4. <a name='-1'></a>工作机制
-通过对原生类型进行封装，上层业务逻辑访问和操作封装后的类型而不直接操作内部真实的数值。在封装类型被操作时，传入的真实数值，会经过加密算法、内存偏移等方式进行处理，不同数据类型处理方式有所不同。可以有效规避常规的内存数据搜索定位作弊方式。
+####  2.1.4. <a name='WorkingPrinciple'></a>Working Principle
+By encapsulating the native type, the upper-level business logic accesses and manipulates the encapsulated type without directly operating the actual internal value. When the encapsulation type is operated, the real value passed in will be processed through encryption algorithms, memory offset, etc., and the processing methods for different data types are different. It can effectively avoid conventional cheating methods for searching and locating memory data.
 
-####  2.1.5. <a name='-1'></a>使用示例
+####  2.1.5. <a name='HowToUse'></a>How To Use
 ```cs
-// 直接替换原数据类型进行定义
+// Directly replace the native type
 public cInt num = 1;
 
-// 与对应原生类型互相赋值操作
+// Mutual assignment operations with native types
 public int a = 1;
 public cInt b = a;
 a = b;
 
-// 与原生类型直接进行常规数学运算
+// Perform regular mathematical operations directly with native types
 public int left = 1;
 public cInt right = 1;
 right++;
 public int add = left + right;
 
-// 不同加密类型之间进行常规数学运算
+// Routine mathematical operations between different encryption types
 public cInt num1 = 1;
 public cFloat num2 = 1f;
 float result = num1 * num2;
 
-// 与原生类型数值进行比较
+// Compare with native type value
 public cInt i1 = 1;
 public int i2 = 1;
 public cInt i3 = 1;
 public Debug.Log(i1 == i2);
 public Debug.Log(i1 == i3);
 
-// 支持被 Convert 做类型转换处理
+// Support using the Convert interface for type conversion
 public cInt srcValue = 1;
 public int dstValue = Convert.ToInt32(srcValue);
 ```
 
-####  2.1.6. <a name='-1'></a>注意事项
-* 由于动态加密密钥每次运行都会重新生成，所以同样的实际数值每次运行内部数值都会不同，因此内部数值不应用于存储。
-* 加密运算有一定性能开销，尽可能使用简单数值加密类型，尽可能只应用于重要数据。
+####  2.1.6. <a name='Attention'></a>Attention
+* Since the dynamic encryption key is regenerated every time it runs, the same actual value will be different every time it runs, so the internal value should not be used for storage.
+* Encryption operations have a certain performance overhead. Use simple numeric encryption types as much as possible and apply only to important data as much as possible.
 
 ###  2.2. <a name='PlayerPrefsAES'></a>PlayerPrefsAES
 
-####  2.2.1. <a name='-1'></a>简介
-提供对 **PlayerPrefs** 存档功能的 **AES** 加解密封装，风格与原生接口保持一致，并额外增加了一些常用数据类型的存取接口，可以在使用 **PlayerPrefs** 作为主要存储方式的项目中进行直接替换以快速获得存储加密能力。
+####  2.2.1. <a name='Introduction-1'></a>Introduction
+Provides **AES** encryption and decryption package for **PlayerPrefs** archive function, the style is consistent with the native interface, and some additional access interfaces for commonly used data types are added, and **PlayerPrefs** can be used as the main storage Directly replace in the project of the method to quickly obtain storage encryption capabilities.
 
-####  2.2.2. <a name='-1'></a>使用示例
+####  2.2.2. <a name='HowToUse-1'></a>How To Use
 ```cs
-// 保存数值
+// Save value
 PlayerPrefsAES.SetInt("Key", 100);
 
-// 读取数值
+// Load value
 var value = PlayerPrefsAES.GetInt("Key");
 
-// 删除数值
+// Delete value
 PlayerPrefsAES.DeleteKey("Key");
 
-// 删除所有数据
+// Delete all data
 PlayerPrefsAES.DeleteAll();
 
-// 保存数据
+// Save & Write data
 PlayerPrefsAES.Save();
 ```
 
 ***
 
-##  3. <a name='DFA'></a>DFA 敏感词过滤
+##  3. <a name='DFA-SensitiveWordFiltering'></a>DFA - Sensitive Word Filtering
 
-###  3.1. <a name='-1'></a>简介
-**DFA** 全称 **Deterministic Finite Automaton** 确定有穷自动机，是比较常用的敏感词过滤算法。该组件对项目中的用户文字输入内容与敏感词词库进行比对并进行过滤。
+###  3.1. <a name='Introduction-1'></a>Introduction
+**DFA** is the full name **Deterministic Finite Automaton**, which is a more commonly used sensitive word filtering algorithm. This component compares and filters the user text input in the project with the sensitive word dictionary.
 
-###  3.2. <a name='-1'></a>使用示例
+###  3.2. <a name='HowToUse-1'></a>How To Use
 ```cs
-// 设置替换敏感字符
+// Set to replace sensitive characters
 DFAUtil.ReplaceSymbol = "*";
 
-// 设置词库文件分隔符
+// Set the thesaurus file separator
 DFAUtil.Separator = new[] { ",", "\n", "\r" };
 
-// 使用预先准备好的词库文本进行初始化
+// Initialize with pre-prepared thesaurus text
 var text = Resources.Load<TextAsset>("DFA").text;
 DFAUtil.Init(text);
 
-// 过滤内容
+// Filter input content
 var content = ".....";
 var result = DFAUtil.FilterWords(content, out var isLimit);
 Debug.Log(isLimit);
@@ -171,21 +173,21 @@ Debug.Log(result);
 ##  4. <a name='EncryptDecrypt'></a>Encrypt / Decrypt
 
 ###  4.1. <a name='AES'></a>AES
-提供对字符串和文件的AES加密解密，速度较快，安全性较高。
+Provides AES encryption and decryption of strings and files, with faster speed and higher security.
 
 ###  4.2. <a name='DES'></a>DES
-提供对字符串和文件的DES加密解密，速度较慢，安全性较低。
+Provides DES encryption and decryption of strings and files, which is slower and less secure.
 
 ###  4.3. <a name='RC4'></a>RC4
-提供对字符串的RC4加密解密，速度最快，安全性不做保证，密码可变长。
+Provide RC4 encryption and decryption of strings, the fastest speed, security is not guaranteed, and the password can be variable length.
 
 ###  4.4. <a name='RSA'></a>RSA
-提供对字符串和文件的RSA签名和验签、加密和解密，速度较慢，安全性最高，密码由程序生成。
+It provides RSA signature and verification, encryption and decryption of strings and files, which is slower and has the highest security. The password is generated by the program.
 
 ###  4.5. <a name='Base64'></a>Base64
-提供对文本的 base64 编码、解码。
+Provide base64 encoding and decoding of text.
 
 ***
 
 ##  5. <a name='MD5'></a>MD5
-提供对文本、文件的标准MD5值和短MD5值计算。
+Provides standard MD5 value and short MD5 value calculation for text and files.
